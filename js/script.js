@@ -63,14 +63,13 @@ function renderWeather(){
 // Render buttons for each searched city
 document.querySelector("#city-search").addEventListener("click", function(){
     cityQuery = document.querySelector("#city-input").value;
+    fetchLocation();
     if(!cityHistory.find(function(cities){
         return cities.city == cityQuery;
     })){
         document.querySelector("#search-history").innerHTML += `<button type="button" class="btn btn-outline-dark">${cityQuery}</button>`
-        fetchLocation();
     } else {
         document.querySelector("#city-input").value = "";
-        fetchWeather();
     }
 })
 
