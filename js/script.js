@@ -9,6 +9,7 @@ var cityHistory = [];
 async function fetchWeather(){
         weather = await fetch( `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLong}&exclude=hourly&appid=df7ce556761f98dad07fc817248b0429` ).then( (weather)=>weather.json() )
         renderWeather();
+        console.log(weather);
         if(localStorage.getItem("cityHistory")){
             cityHistory = JSON.parse(localStorage.getItem("cityHistory"));
         }
@@ -51,7 +52,7 @@ function renderWeather(){
         document.querySelector(".uv-warning").style = "background-color: violet";
     };
     document.querySelector("#today").textContent = `Today, ${moment().format("LL")}`;
-    for(i=0; i<5; i++){
+    for(i=1; i<6; i++){
         document.querySelector(`#forecast-${i}-day`).textContent = moment().add(i, 'day').format("LL");
         document.querySelector(`#forecast-${i}-icon`).src = `http://openweathermap.org/img/wn/${weather.daily[i].weather[0].icon}@2x.png`;
         document.querySelector(`#forecast-${i}-temp`).textContent = `Temp: ${(weather.daily[i].temp.day-273.15).toFixed(1)} °C`;
@@ -114,5 +115,11 @@ function clearHistory(){
         document.querySelector("#uv").textContent = "";
         document.querySelector(".header-icon").src = "";
         document.querySelector("#today").textContent = "";
+        $('#confirmModal').modal("hide");
     }
 }
+
+// Confirm clearing
+document.querySelector("#clear-btn").addEventListener("click", function(){
+    $('#confirmModal').modal();
+});
