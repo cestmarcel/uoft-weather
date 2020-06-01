@@ -99,7 +99,7 @@ function renderHistory(){
         cityHistory.forEach(function(data){
             document.querySelector("#search-history").innerHTML += `<button type="button" class="btn btn-outline-dark">${data.city}</button>`;
         })
-        cityQuery = cityHistory[0].city;
+        cityQuery = cityHistory[cityHistory.length-1].city;
         document.querySelector(".forecast-div").style = "display: block";
         fetchLocation();
     }
