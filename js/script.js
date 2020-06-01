@@ -19,14 +19,25 @@ async function fetchWeather(){
             cityHistory.push({city: cityQuery, lat: cityLat, long: cityLong});
             localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
         }
+        if(!cityHistory.find(function(cities){
+            return cities.city == cityQuery;
+        })){
+            document.querySelector("#search-history").innerHTML += `<button type="button" class="btn btn-outline-dark">${cityQuery}</button>`
+        } else {
+            document.querySelector("#city-input").value = "";
+        }
 }
 
 // Converting the city name into longitude and latitude
 async function fetchLocation(){
-    const result = await fetch( `https://api.opencagedata.com/geocode/v1/json?q=${cityQuery}&key=15c163f7b80843da8be9c263a4aad238` ).then( (result)=>result.json() )
+    const result = await fetch( `https://api.opencagedata.com/geocode/v1/json?q=${cityQuery}&key=15c163f7b80843da8be9c263a4aad238` ).then( (result)=>result.json() );
+    if(result.results.length == 0){
+        document.querySelector("#city-input").value = "";
+    } else {
     cityLat = result.results[0].geometry.lat;
     cityLong = result.results[0].geometry.lng;
     fetchWeather();
+    }
 }
 
 // Render the weather info on the page
@@ -64,13 +75,6 @@ function renderWeather(){
 document.querySelector("#city-search").addEventListener("click", function(){
     cityQuery = document.querySelector("#city-input").value;
     fetchLocation();
-    if(!cityHistory.find(function(cities){
-        return cities.city == cityQuery;
-    })){
-        document.querySelector("#search-history").innerHTML += `<button type="button" class="btn btn-outline-dark">${cityQuery}</button>`
-    } else {
-        document.querySelector("#city-input").value = "";
-    }
 })
 
 // Make searched cities clickable
