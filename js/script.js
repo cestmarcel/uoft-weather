@@ -10,6 +10,13 @@ async function fetchWeather(){
         weather = await fetch( `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLong}&exclude=hourly&appid=df7ce556761f98dad07fc817248b0429` ).then( (weather)=>weather.json() )
         renderWeather();
         console.log(weather);
+        if(!cityHistory.find(function(cities){
+            return cities.city == cityQuery;
+        })){
+            document.querySelector("#search-history").innerHTML += `<button type="button" class="btn btn-outline-dark">${cityQuery}</button>`
+        } else {
+            document.querySelector("#city-input").value = "";
+        }
         if(localStorage.getItem("cityHistory")){
             cityHistory = JSON.parse(localStorage.getItem("cityHistory"));
         }
@@ -19,13 +26,6 @@ async function fetchWeather(){
             cityHistory.push({city: cityQuery, lat: cityLat, long: cityLong});
             localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
         }
-        if(!cityHistory.find(function(cities){
-            return cities.city == cityQuery;
-        })){
-            document.querySelector("#search-history").innerHTML += `<button type="button" class="btn btn-outline-dark">${cityQuery}</button>`
-        } else {
-            document.querySelector("#city-input").value = "";
-        }
 }
 
 // Converting the city name into longitude and latitude
@@ -33,6 +33,13 @@ async function fetchLocation(){
     const result = await fetch( `https://api.opencagedata.com/geocode/v1/json?q=${cityQuery}&key=15c163f7b80843da8be9c263a4aad238` ).then( (result)=>result.json() );
     if(result.results.length == 0){
         document.querySelector("#city-input").value = "";
+        document.querySelector("#alert-area").innerHTML =
+            `<div class="alert alert-secondary alert-dismissible fade show" role="alert">
+            <strong>Hold up!</strong> Please check the spelling of your city.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>`;
     } else {
     cityLat = result.results[0].geometry.lat;
     cityLong = result.results[0].geometry.lng;
