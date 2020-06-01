@@ -40,7 +40,6 @@ body {
     background-color: white;
     width: 100%;
     border-radius: 0;
-    border-bottom: none;
     border-color: #ced4da;
 }
 
@@ -48,15 +47,26 @@ body {
     border-color: #FF784F;
 }
 
-.btn-top {
+.btn-outline-dark:first-of-type {
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
 
-.btn-bottom {
+.btn-outline-dark:last-of-type {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     border-bottom: solid 1px #ced4da;
+}
+
+#clear-btn {
+    width: 100%;
+    background-color: #FF784F;
+    border-color: #FF784F;
+}
+
+#clear-btn:hover {
+    background-color: #2C4251;
+    border-color: #2C4251;
 }
 
 /* Detail overview styles */
@@ -67,13 +77,31 @@ body {
     padding-left: 0;
 }
 
+#content-city {
+    display: inline-block;
+}
+
+.header-icon {
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.uv-warning {
+    border-radius: 3px;
+    padding: 1px;
+}
+
 /* 5 day forecast styles */
+.forecast-div {
+    display: none; 
+}
+
 .forecast {
     background-color: #2C4251;
     border: 1px solid #2C4251;
     border-radius: 3px;
     color: white;
-    height: 150px;
+    height: 250px;
     padding: 10px;
 }
 
