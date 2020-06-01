@@ -9,7 +9,6 @@ var cityHistory = [];
 async function fetchWeather(){
         weather = await fetch( `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLong}&exclude=hourly&appid=df7ce556761f98dad07fc817248b0429` ).then( (weather)=>weather.json() )
         renderWeather();
-        console.log(weather);
         if(!cityHistory.find(function(cities){
             return cities.city == cityQuery;
         })){
@@ -56,7 +55,7 @@ function renderWeather(){
     document.querySelector("#humidity").textContent = `Humidity: ${weather.current.humidity} %`;
     document.querySelector("#wind").textContent = `Wind speed: ${weather.current.wind_speed} km/h`;
     document.querySelector("#uv").innerHTML = `UV index: <span class="uv-warning">${weather.current.uvi}</span>`;
-    document.querySelector(".header-icon").innerHTML = `<img src="http://openweathermap.org/img/wn/${weather.current.weather[0].icon}@2x.png"  alt="Icon today's weather"/>`
+    document.querySelector(".header-icon").innerHTML = `<img src="https://openweathermap.org/img/wn/${weather.current.weather[0].icon}@2x.png"  alt="Icon today's weather"/>`
     var uvi = weather.current.uvi;
     if(uvi<=2){
         document.querySelector(".uv-warning").style = "background-color: green; color: white";
@@ -72,7 +71,7 @@ function renderWeather(){
     document.querySelector("#today").textContent = `Today, ${moment().format("LL")}`;
     for(i=1; i<6; i++){
         document.querySelector(`#forecast-${i}-day`).textContent = moment().add(i, 'day').format("LL");
-        document.querySelector(`#forecast-${i}-icon`).innerHTML = `<img src="http://openweathermap.org/img/wn/${weather.daily[i].weather[0].icon}@2x.png" alt="Icon forecast day ${i}"/>`;
+        document.querySelector(`#forecast-${i}-icon`).innerHTML = `<img src="https://openweathermap.org/img/wn/${weather.daily[i].weather[0].icon}@2x.png" alt="Icon forecast day ${i}"/>`;
         document.querySelector(`#forecast-${i}-temp`).textContent = `Temp: ${(weather.daily[i].temp.day-273.15).toFixed(1)} °C`;
         document.querySelector(`#forecast-${i}-humid`).textContent = `Humidity: ${weather.daily[i].humidity} %`;
     }
