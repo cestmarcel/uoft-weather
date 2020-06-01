@@ -1,24 +1,26 @@
+// Required variables
 var cityQuery;
 var cityLat;
 var cityLong;
 var weather;
 var cityHistory = [];
 
+// Fetching the weather
 async function fetchWeather(){
-    weather = await fetch( `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLong}&exclude=hourly&appid=df7ce556761f98dad07fc817248b0429` ).then( (weather)=>weather.json() )
-    console.log(weather);
-    renderWeather();
-    if(localStorage.getItem("cityHistory")){
-        cityHistory = JSON.parse(localStorage.getItem("cityHistory"));
-    }
-    if(!cityHistory.find(function(cities){
-        return cities.city == cityQuery;
-    })){
-        cityHistory.push({city: cityQuery, lat: cityLat, long: cityLong});
-        localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
-    }
+        weather = await fetch( `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLong}&exclude=hourly&appid=df7ce556761f98dad07fc817248b0429` ).then( (weather)=>weather.json() )
+        renderWeather();
+        if(localStorage.getItem("cityHistory")){
+            cityHistory = JSON.parse(localStorage.getItem("cityHistory"));
+        }
+        if(!cityHistory.find(function(cities){
+            return cities.city == cityQuery;
+        })){
+            cityHistory.push({city: cityQuery, lat: cityLat, long: cityLong});
+            localStorage.setItem("cityHistory", JSON.stringify(cityHistory));
+        }
 }
 
+// Converting the city name into longitude and latitude
 async function fetchLocation(){
     const result = await fetch( `https://api.opencagedata.com/geocode/v1/json?q=${cityQuery}&key=15c163f7b80843da8be9c263a4aad238` ).then( (result)=>result.json() )
     cityLat = result.results[0].geometry.lat;
@@ -26,6 +28,7 @@ async function fetchLocation(){
     fetchWeather();
 }
 
+// Render the weather info on the page
 function renderWeather(){
     document.querySelector("#city-input").value = "";
     document.querySelector(".forecast-div").style = "display: block";
@@ -66,6 +69,7 @@ document.querySelector("#city-search").addEventListener("click", function(){
         fetchLocation();
     } else {
         document.querySelector("#city-input").value = "";
+        fetchWeather();
     }
 })
 
@@ -109,7 +113,6 @@ function clearHistory(){
         document.querySelector("#wind").textContent = "";
         document.querySelector("#uv").textContent = "";
         document.querySelector(".header-icon").src = "";
-        document.querySelector(".uv-warning").style = "background-color: white";
         document.querySelector("#today").textContent = "";
     }
 }
