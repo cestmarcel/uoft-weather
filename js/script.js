@@ -122,7 +122,7 @@ function clearHistory(){
         document.querySelector("#humidity").textContent = "";
         document.querySelector("#wind").textContent = "";
         document.querySelector("#uv").textContent = "";
-        document.querySelector(".header-icon").src = "";
+        document.querySelector(".header-icon").innerHTML = "";
         document.querySelector("#today").textContent = "";
         $('#confirmModal').modal("hide");
     }
