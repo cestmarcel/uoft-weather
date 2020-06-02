@@ -3,6 +3,7 @@
 
 ### 1. Summary
 This application is a weather dashboard that allows the user to look up a city and view current weather conditions as well as a forecast for the next five days. The overview of the current condition also includes a color-coded UV index to show the potential risk of UV radiation on that day. Cities that have been searched for are being stored in the search history, which is accessible in a side navigation. The cities are also being stored in local storage, so they persist reloading the page. Upon reload, the most recently queried city will show.
+The application is available under: https://marcelthiemann.com/uoft-weather
 
 ![Screenshot of the application](https://github.com/cestmarcel/uoft-weather/blob/master/assets/screenshots/application.png)
 
